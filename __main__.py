@@ -8,23 +8,6 @@ import pulumi_azure_native as azure_native
 
 resource_group = azure_native.resources.get_resource_group("TF_automation_try-lorena")
 
-network_security_group = azure_native.network.NetworkSecurityGroup("edk-vm-eikon-psecg-test01-lor",
-    location=resource_group.location,
-    network_security_group_name="edk-vm-eikon-psecg-test01-lor",
-    resource_group_name=resource_group.name,
-    security_rules=[{
-        "access": "Allow",
-        "destinationPortRange": "22",
-        "direction": "Inbound",
-        "name": "Allow-SSH",
-        "priority": 1000,
-        "protocol": "Tcp",
-        "sourceAddressPrefix": "*",
-        "sourcePortRange": "*",
-        "destinationAddressPrefix": "*",
-
-    }])
-
 #insert network interface creation: name 
 net = network.VirtualNetwork(
     "vm-eikon-network-test01-lor",
@@ -36,7 +19,6 @@ net = network.VirtualNetwork(
         name="vm-eikon-subnet-test01-lor",
         address_prefix="172.17.0.0/26",
         network_security_group= network.NetworkSecurityGroupArgs(
-        id=network_security_group.id 
     ),
     )])
 
@@ -50,7 +32,6 @@ network_iface = network.NetworkInterface(
     resource_group_name=resource_group.name,
     location = resource_group.location,
     network_security_group= network.NetworkSecurityGroupArgs(
-       id=network_security_group.id 
     ),
     ip_configurations=[network.NetworkInterfaceIPConfigurationArgs(
         name="vm-eikon-ipconfig-test01-lor",
