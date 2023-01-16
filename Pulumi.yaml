@@ -1,0 +1,6 @@
+name: ADFColdMig
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Azure Native Pyhton for creating a DF pipeline that migrates data
